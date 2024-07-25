@@ -1,19 +1,26 @@
 <script setup>
-
-import { computed, ref } from 'vue';
-import RegisterForm from './components/RegisterForm.vue'
-
-
+import RegisterComponent from './components/RegisterComponent.vue'
+import DataComponent from './components/DataComponent.vue'
 </script>
 
 <template>
-
   <div class="container">
-    <register-form/>
+    <data-component class="data-component" />
+    <register-component class="register-component" />
   </div>
-
 </template>
 
 <style scoped>
-
+.container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .data-component {
+    width: 50%;
+  }
+  
+  .register-component {
+    width: 50%;
+  }
 </style>
