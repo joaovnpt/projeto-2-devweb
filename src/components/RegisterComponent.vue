@@ -59,19 +59,51 @@ function dataVerification() {
   if (user.name === '') {
     alert('"Name" is required')
     Event.preventDefault() //faz o programa parar e não aparecer o DataComponent mesmo que a condição seja atingida
-  } else if (user.email === '') alert('"Email" is required')
-  else if (user.password === '') alert('"password" is required')
-  else if (user.confirmPassword === '') alert('"Confirm password" is required')
-  else if (user.address === '') alert('"address" is required')
-  else if (user.selectedState === '') alert('"State" is required')
-  else if (user.birthDate === '') alert('"Birth date" is required')
-  else if (user.city === '') alert('"City" is required')
-  else if (user.hobbies === '') alert('"Hobbies" is required')
-  else if (user.programmingLanguages === '') alert('"Programming Languages" is required')
-  else if (user.biography === '') alert('"biography" is required')
+  } else if (user.email === '') {
+    alert('"Email" is required')
+    Event.preventDefault()
+  }
+  else if (user.password === '') {
+    alert('"password" is required')
+    Event.preventDefault()
+  }
+  else if (user.confirmPassword === '') {
+    alert('"Confirm password" is required')
+    Event.preventDefault()
+  }
+  else if (user.address === '') {
+    alert('"address" is required')
+    Event.preventDefault()
+  }
+    else if (user.selectedState === '') {
+      alert('"State" is required')
+      Event.preventDefault()
+    }
+  else if (user.birthDate === '') {
+    alert('"Birth date" is required')
+    Event.preventDefault()
+  }
+  else if (user.city === '') {
+    alert('"City" is required')
+    Event.preventDefault()
+  }
+  else if (user.hobbies === '') {
+    alert('"Hobbies" is required')
+    Event.preventDefault()
+  }
+  else if (user.programmingLanguages === '') {
+    alert('"Programming Languages" is required')
+    Event.preventDefault()
+  }
+  else if (user.biography === '') {
+    alert('"biography" is required')
+    Event.preventDefault()
+  }
   else if (user.password != user.confirmPassword) {
     alert('Passwords must be the same.')
-  } else {
+    Event.preventDefault()
+  }
+  else {
     emit('formSubmitted')
   }
 }
@@ -122,7 +154,7 @@ function twoInOne() {
       </div>
 
       <div class="form-item">
-        <label for="address">address:</label>
+        <label for="address">Address:</label>
         <input type="text" name="address" id="address" v-model="user.address" />
       </div>
 
