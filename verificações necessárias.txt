@@ -1,4 +1,4 @@
 email: verificação automatica
 senha e confirmação: ser igual
 bio: mínimo 50 caracteres
-hobbies/linguagens: minimo 2 de cada ("Informe pelo menos 2 hobbies/linguagens, separe-os por vírgula")
+hobbies: minimo 2 ("Informe pelo menos 2 hobbies, separe-os por vírgula")

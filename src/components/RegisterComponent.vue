@@ -1,12 +1,15 @@
 <script setup>
-import { ref, reactive } from 'vue'
-const title = ref('Projeto 2 - Components')
+import { reactive, ref, computed, defineEmits, defineProps } from 'vue'
+defineProps(['title'])
+
+const emit = defineEmits(['updateUser', 'formSubmitted', 'toggleDataVisibility'])
+
 const user = reactive({
   name: '',
   email: '',
   password: '',
   confirmPassword: '',
-  adress: '',
+  address: '',
   city: '',
   selectedState: '',
   birthDate: '',
@@ -14,6 +17,13 @@ const user = reactive({
   programmingLanguages: '',
   biography: ''
 })
+
+const showData = ref(false)
+const buttonText = computed(() => (showData.value ? 'Hide' : 'Show'))
+
+function updateUser() {
+  emit('updateUser', user)
+}
 
 const states = [
   { uf: 'AC', name: 'Acre' },
@@ -45,31 +55,36 @@ const states = [
   { uf: 'TO', name: 'Tocantins' }
 ]
 
-function passwordVerification() {
-  if (user.password != user.confirmPassword) {
-    alert('Passwords must be the same.');
-
+function dataVerification() {
+  if (user.name === '') {
+    alert('"Name" is required')
+    Event.preventDefault() //faz o programa parar e não aparecer o DataComponent mesmo que a condição seja atingida
+  } else if (user.email === '') alert('"Email" is required')
+  else if (user.password === '') alert('"password" is required')
+  else if (user.confirmPassword === '') alert('"Confirm password" is required')
+  else if (user.address === '') alert('"address" is required')
+  else if (user.selectedState === '') alert('"State" is required')
+  else if (user.birthDate === '') alert('"Birth date" is required')
+  else if (user.city === '') alert('"City" is required')
+  else if (user.hobbies === '') alert('"Hobbies" is required')
+  else if (user.programmingLanguages === '') alert('"Programming Languages" is required')
+  else if (user.biography === '') alert('"biography" is required')
+  else if (user.password != user.confirmPassword) {
+    alert('Passwords must be the same.')
+  } else {
+    emit('formSubmitted')
   }
 }
 
-function hobbiesVerification() {
-  const caracter = ",";
-  if (!user.hobbies.includes(caracter)) alert('You must have at least 2 hobbies.')
+function toggleVisibility() {
+  showData.value = !showData.value
+  emit('toggleDataVisibility', showData.value)
 }
 
-function emptyFieldVerification() {
-  for (const key in user) {
-    if (!user[key] || user[key].trim()) { //confere se alguma key (dado dentro do objeto) não está vazia.
-      alert('aaa');
-      return; //para a execução se encontrar um campo vazio, assim não apresentará 'aaa' 100 vezes.
-    }
-  }
-}
-
-function generalVerification() {
-  passwordVerification();
-  hobbiesVerification();
-  emptyFieldVerification()
+function twoInOne() {
+  dataVerification()
+  toggleVisibility()
+  updateUser()
 }
 </script>
 
@@ -77,64 +92,89 @@ function generalVerification() {
   <div class="form-container">
     <h1 class="title">Register on</h1>
     <h1 class="title">{{ title }}</h1>
-    <form action="" class="form" @submit.prevent="generalVerification()">
-      <!--@submit.prevent="..." impede que o formulário seja enviado, caso não passe da verificação -->
+    <form action="" class="form" @submit.prevent="dataVerification()">
+      <div class="layout-2-2">
+        <!--Nesta div, o layour será de 2 colunas e duas linhas (2-2)-->
+        <div class="form-item">
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" v-model="user.name" />
+        </div>
 
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" v-model="user.name" />
+        <div class="form-item">
+          <label for="email">Email:</label>
+          <input type="email" name="name" id="email" v-model="user.email" />
+        </div>
 
-      <label for="email">Email:</label>
-      <input type="email" name="name" id="email" v-model="user.email" />
+        <div class="form-item">
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" v-model="user.password" />
+        </div>
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" v-model="user.password" />
+        <div class="form-item">
+          <label for="confirm-password">Confirm your password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirm-password"
+            v-model="user.confirmPassword"
+          />
+        </div>
+      </div>
 
-      <label for="confirmPassword">Confirm your password:</label>
-      <input
-        type="password"
-        name="confirmPassword"
-        id="confirmPassword"
-        v-model="user.confirmPassword"
-      />
+      <div class="form-item">
+        <label for="address">address:</label>
+        <input type="text" name="address" id="address" v-model="user.address" />
+      </div>
 
-      <label for="adress">Adress:</label>
-      <input type="adress" name="adress" id="adress" v-model="user.adress" />
+      <div class="layout-3-2">
+        <div class="form-item" id="city-area">
+          <label for="city">City:</label>
+          <input type="text" name="city" id="city" v-model="user.city" />
+        </div>
 
-      <label for="city">City:</label>
-      <input type="text" name="city" id="city" v-model="user.city" />
+        <div class="form-item" id="states-area">
+          <label for="slct-states">State:</label>
+          <select name="slctStates" id="slct-states" v-model="user.selectedState">
+            <option value="" disabled>Select your state</option>
+            <option v-for="state of states" :key="state.uf">
+              {{ state.uf }}
+            </option>
+          </select>
+        </div>
 
-      <label for="state">State:</label>
-      <select name="slctStates" id="slctStates" v-model="user.selectedState">
-        <option value="" disabled>Select your state</option>
-        <option v-for="state of states" :key="state.uf">
-          {{ state.uf }}
-        </option>
-      </select>
+        <div class="form-item" id="birth-date-area">
+          <label for="birth-date">Birth date:</label>
+          <input type="date" name="birthDate" id="birth-date" v-model="user.birthDate" />
+        </div>
 
-      <label for="birthDate">Birth date:</label>
-      <input type="date" name="birthDate" id="birthDate" v-model="user.birthDate" />
+        <div class="form-item" id="hobbies-area">
+          <label for="hobbies">Hobbies:</label>
+          <input type="text" name="hobbies" id="hobbies" v-model="user.hobbies" />
+        </div>
 
-      <label for="hobbies">Hobbies:</label>
-      <input type="text" name="hobbies" id="hobbies" v-model="user.hobbies" />
+        <div class="form-item" id="programming-languages-area">
+          <label for="programming-languages">Programming languages:</label>
+          <input
+            type="text"
+            name="programmingLanguages"
+            id="programming-languages"
+            v-model="user.programmingLanguages"
+          />
+        </div>
+      </div>
 
-      <label for="programmingLanguages">Programming languages:</label>
-      <input
-        type="text"
-        name="programmingLanguages"
-        id="programmingLanguages"
-        v-model="user.programmingLanguages"
-      />
+      <div class="form-item">
+        <label for="biography">Biography:</label>
+        <textarea
+          name="biography"
+          id="biography"
+          cols="25"
+          rows="10"
+          v-model="user.biography"
+        ></textarea>
+      </div>
 
-      <label for="biography">Biography:</label>
-      <textarea
-        name="biography"
-        id="biography"
-        cols="25"
-        rows="10"
-        v-model="user.biography"
-      ></textarea>
-
-      <button class="show-data-btn">Show data</button>
+      <button type="button" @click="twoInOne()">{{ buttonText }}</button>
     </form>
   </div>
 </template>
@@ -145,12 +185,49 @@ function generalVerification() {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  justify-self: left;
 }
 
 .form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  margin: 50px 20px 50px 20px;
+}
+
+.form-item {
+  display: grid;
+  grid-auto-columns: auto;
+}
+
+.layout-2-2 {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.layout-3-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    'city state birth-date'
+    'hobbies . programming-languages';
+}
+
+#city-area {
+  grid-area: city;
+}
+
+#states-area {
+  grid-area: state;
+}
+
+#birth-date-area {
+  grid-area: birth-date;
+}
+
+#hobbies-area {
+  grid-area: hobbies;
+}
+
+#programming-languages-area {
+  grid-area: programming-languages;
 }
 </style>
