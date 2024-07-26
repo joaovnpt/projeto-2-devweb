@@ -56,40 +56,40 @@ function dataVerification() {
     alert('"Name" is required')
     Event.preventDefault() //faz o programa parar e não aparecer o DataComponent mesmo que a condição seja atingida
   } 
-  //  else if (user.email === '') {
-  //   alert('"Email" is required')
-  //   Event.preventDefault()
-  // } else if (user.password === '') {
-  //   alert('"password" is required')
-  //   Event.preventDefault()
-  // } else if (user.confirmPassword === '') {
-  //   alert('"Confirm password" is required')
-  //   Event.preventDefault()
-  // } else if (user.address === '') {
-  //   alert('"address" is required')
-  //   Event.preventDefault()
-  // } else if (user.selectedState === '') {
-  //   alert('"State" is required')
-  //   Event.preventDefault()
-  // } else if (user.birthDate === '') {
-  //   alert('"Birth date" is required')
-  //   Event.preventDefault()
-  // } else if (user.city === '') {
-  //   alert('"City" is required')
-  //   Event.preventDefault()
-  // } else if (user.hobbies === '') {
-  //   alert('"Hobbies" is required')
-  //   Event.preventDefault()
-  // } else if (user.programmingLanguages === '') {
-  //   alert('"Programming Languages" is required')
-  //   Event.preventDefault()
-  // } else if (user.biography === '') {
-  //   alert('"biography" is required')
-  //   Event.preventDefault()
-  // } else if (user.password != user.confirmPassword) {
-  //   alert('Passwords must be the same.')
-  //   Event.preventDefault()
-  // } 
+   else if (user.email === '') {
+    alert('"Email" is required')
+    Event.preventDefault()
+  } else if (user.password === '') {
+    alert('"password" is required')
+    Event.preventDefault()
+  } else if (user.confirmPassword === '') {
+    alert('"Confirm password" is required')
+    Event.preventDefault()
+  } else if (user.address === '') {
+    alert('"address" is required')
+    Event.preventDefault()
+  } else if (user.selectedState === '') {
+    alert('"State" is required')
+    Event.preventDefault()
+  } else if (user.birthDate === '') {
+    alert('"Birth date" is required')
+    Event.preventDefault()
+  } else if (user.city === '') {
+    alert('"City" is required')
+    Event.preventDefault()
+  } else if (user.hobbies === '') {
+    alert('"Hobbies" is required')
+    Event.preventDefault()
+  } else if (user.programmingLanguages === '') {
+    alert('"Programming Languages" is required')
+    Event.preventDefault()
+  } else if (user.biography === '') {
+    alert('"biography" is required')
+    Event.preventDefault()
+  } else if (user.password != user.confirmPassword) {
+    alert('Passwords must be the same.')
+    Event.preventDefault()
+  } 
   else {
     showData.value = !showData.value
     emit('formSubmitted', { ...user })
