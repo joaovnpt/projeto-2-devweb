@@ -117,7 +117,7 @@ function dataVerification() {
         </div>
 
         <div class="form-item">
-          <label for="password">Passwordddddd:</label>
+          <label for="password">Password:</label>
           <input type="password" name="password" id="password" v-model="user.password" />
         </div>
 
