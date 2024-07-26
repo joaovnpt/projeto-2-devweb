@@ -5,36 +5,27 @@ import RegisterComponent from './components/RegisterComponent.vue'
 
 const showData = ref(false)
 
-const user = ref({ name: '' });
+const user = ref({ name: '' })
 
-const handleUpdateUser = (updatedUser) => {
+function handleFormSubmitted(updatedUser) {
+  showData.value = !showData.value
   user.value = updatedUser
 }
 
-function handleFormSubmitted() {
-  showData.value = true
-}
-
-function handleToggleDataVisibility(visible) {
-  showData.value = visible
-}
 </script>
 
 <template>
   <div class="container">
     <RegisterComponent
       class="register-component"
-      @updateUser="handleUpdateUser"
       title="Project 2: Components"
       @formSubmitted="handleFormSubmitted"
-      @toggleDataVisibility="handleToggleDataVisibility"
     />
     <DataComponent :user="user" class="data-component" v-if="showData" />
   </div>
 </template>
 
 <style scoped>
-
 @media (max-width: 1090px) {
   .container {
     display: flex !important;
@@ -45,6 +36,7 @@ function handleToggleDataVisibility(visible) {
 .container {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 
 .data-component {

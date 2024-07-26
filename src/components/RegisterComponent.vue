@@ -2,7 +2,7 @@
 import { reactive, ref, computed, defineEmits, defineProps } from 'vue'
 defineProps(['title'])
 
-const emit = defineEmits(['updateUser', 'formSubmitted', 'toggleDataVisibility'])
+const emit = defineEmits(['formSubmitted'])
 
 const user = reactive({
   name: '',
@@ -20,10 +20,6 @@ const user = reactive({
 
 const showData = ref(false)
 const buttonText = computed(() => (showData.value ? 'Hide' : 'Show'))
-
-function updateUser() {
-  emit('updateUser', user)
-}
 
 const states = [
   { uf: 'AC', name: 'Acre' },
@@ -59,71 +55,54 @@ function dataVerification() {
   if (user.name === '') {
     alert('"Name" is required')
     Event.preventDefault() //faz o programa parar e não aparecer o DataComponent mesmo que a condição seja atingida
-  } else if (user.email === '') {
-    alert('"Email" is required')
-    Event.preventDefault()
-  }
-  else if (user.password === '') {
-    alert('"password" is required')
-    Event.preventDefault()
-  }
-  else if (user.confirmPassword === '') {
-    alert('"Confirm password" is required')
-    Event.preventDefault()
-  }
-  else if (user.address === '') {
-    alert('"address" is required')
-    Event.preventDefault()
-  }
-    else if (user.selectedState === '') {
-      alert('"State" is required')
-      Event.preventDefault()
-    }
-  else if (user.birthDate === '') {
-    alert('"Birth date" is required')
-    Event.preventDefault()
-  }
-  else if (user.city === '') {
-    alert('"City" is required')
-    Event.preventDefault()
-  }
-  else if (user.hobbies === '') {
-    alert('"Hobbies" is required')
-    Event.preventDefault()
-  }
-  else if (user.programmingLanguages === '') {
-    alert('"Programming Languages" is required')
-    Event.preventDefault()
-  }
-  else if (user.biography === '') {
-    alert('"biography" is required')
-    Event.preventDefault()
-  }
-  else if (user.password != user.confirmPassword) {
-    alert('Passwords must be the same.')
-    Event.preventDefault()
-  }
+  } 
+  //  else if (user.email === '') {
+  //   alert('"Email" is required')
+  //   Event.preventDefault()
+  // } else if (user.password === '') {
+  //   alert('"password" is required')
+  //   Event.preventDefault()
+  // } else if (user.confirmPassword === '') {
+  //   alert('"Confirm password" is required')
+  //   Event.preventDefault()
+  // } else if (user.address === '') {
+  //   alert('"address" is required')
+  //   Event.preventDefault()
+  // } else if (user.selectedState === '') {
+  //   alert('"State" is required')
+  //   Event.preventDefault()
+  // } else if (user.birthDate === '') {
+  //   alert('"Birth date" is required')
+  //   Event.preventDefault()
+  // } else if (user.city === '') {
+  //   alert('"City" is required')
+  //   Event.preventDefault()
+  // } else if (user.hobbies === '') {
+  //   alert('"Hobbies" is required')
+  //   Event.preventDefault()
+  // } else if (user.programmingLanguages === '') {
+  //   alert('"Programming Languages" is required')
+  //   Event.preventDefault()
+  // } else if (user.biography === '') {
+  //   alert('"biography" is required')
+  //   Event.preventDefault()
+  // } else if (user.password != user.confirmPassword) {
+  //   alert('Passwords must be the same.')
+  //   Event.preventDefault()
+  // } 
   else {
-    emit('formSubmitted')
+    showData.value = !showData.value
+    emit('formSubmitted', { ...user })
   }
-}
-
-function toggleVisibility() {
-  showData.value = !showData.value
-  emit('toggleDataVisibility', showData.value)
-}
-
-function twoInOne() {
-  dataVerification()
-  toggleVisibility()
-  updateUser()
 }
 </script>
 
 <template>
   <div class="form-container">
-    <h1 class="title">Register on</h1>
-    <h1 class="title">{{ title }}</h1>
+    <div class="title-container">
+      <h1 class="title" id="static-title">Register on</h1>
+      <h1 class="title" id="dynamic-title">{{ title }}</h1>
+    </div>
     <form action="" class="form" @submit.prevent="dataVerification()">
       <div class="layout-2-2">
         <!--Nesta div, o layour será de 2 colunas e duas linhas (2-2)-->
@@ -132,7 +111,7 @@ function twoInOne() {
           <input type="text" name="name" id="name" v-model="user.name" />
         </div>
 
-        <div class="form-item">
+        <div class="form-item" id="email-area">
           <label for="email">Email:</label>
           <input type="email" name="name" id="email" v-model="user.email" />
         </div>
@@ -142,7 +121,7 @@ function twoInOne() {
           <input type="password" name="password" id="password" v-model="user.password" />
         </div>
 
-        <div class="form-item">
+        <div class="form-item" id="confirm-password-area">
           <label for="confirm-password">Confirm your password:</label>
           <input
             type="password"
@@ -206,7 +185,7 @@ function twoInOne() {
         ></textarea>
       </div>
 
-      <button type="button" @click="twoInOne()">{{ buttonText }}</button>
+      <button type="submit">{{ buttonText }}</button>
     </form>
   </div>
 </template>
@@ -217,7 +196,6 @@ function twoInOne() {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  justify-self: left;
 }
 
 .form {
@@ -231,8 +209,35 @@ function twoInOne() {
   grid-auto-columns: auto;
 }
 
+#confirm-password-area {
+  justify-self: end;
+  margin-left: 60px;
+}
+
+#email-area {
+  justify-self: end;
+}
+
+#birth-date {
+  width: 110px;
+}
+
+#birth-date-area {
+  justify-self: end;
+}
+
 input {
   width: 200px;
+  height: 30px;
+  border-radius: 8px;
+  border-color: #aeaeae;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #f2f2f2;
+}
+
+#address {
+  width: auto;
 }
 
 select {
@@ -242,17 +247,18 @@ select {
 
 .layout-2-2 {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: auto auto;
   gap: 10px 0;
+  justify-content: start;
 }
 
 .layout-3-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, auto);
   grid-template-areas:
     'city state birth-date'
     'hobbies . programming-languages';
-    gap: 10px 0;
+  gap: 10px 0;
 }
 
 #city-area {

@@ -6,3 +6,15 @@
 h1, p, label, input {
     font-family: 'Kumbh sans';
 }
+
+label {
+    width: fit-content;
+}
+
+#dynamic-title {
+    color: rgba(132, 0, 143, 1);
+}
+
+.title-container {
+    margin: 50px 0 0 -130px;
+}
