@@ -223,6 +223,7 @@ function twoInOne() {
 .form {
   display: grid;
   margin: 50px 20px 50px 20px;
+  gap: 10px 0;
 }
 
 .form-item {
@@ -230,9 +231,19 @@ function twoInOne() {
   grid-auto-columns: auto;
 }
 
+input {
+  width: 200px;
+}
+
+select {
+  display: flex;
+  width: 60px;
+}
+
 .layout-2-2 {
   display: grid;
   grid-template-columns: 50% 50%;
+  gap: 10px 0;
 }
 
 .layout-3-2 {
@@ -241,6 +252,7 @@ function twoInOne() {
   grid-template-areas:
     'city state birth-date'
     'hobbies . programming-languages';
+    gap: 10px 0;
 }
 
 #city-area {

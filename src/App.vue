@@ -22,7 +22,6 @@ function handleToggleDataVisibility(visible) {
 
 <template>
   <div class="container">
-    <DataComponent :user="user" class="data-component" v-if="showData" />
     <RegisterComponent
       class="register-component"
       @updateUser="handleUpdateUser"
@@ -30,6 +29,7 @@ function handleToggleDataVisibility(visible) {
       @formSubmitted="handleFormSubmitted"
       @toggleDataVisibility="handleToggleDataVisibility"
     />
+    <DataComponent :user="user" class="data-component" v-if="showData" />
   </div>
 </template>
 
@@ -49,6 +49,7 @@ function handleToggleDataVisibility(visible) {
 
 .data-component {
   width: 50%;
+  height: 100vh;
 }
 
 .register-component {
