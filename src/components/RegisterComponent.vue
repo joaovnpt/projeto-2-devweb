@@ -280,4 +280,20 @@ select {
 #programming-languages-area {
   grid-area: programming-languages;
 }
+
+button {
+  background-color: rgba(132, 0, 143, 1);
+  color: white;
+  height: 40px;
+  width: 140px;
+  border-radius: 10px;
+  border: 0;
+  transition: 150ms;
+}
+
+button:hover {
+  transform: scale(1.02);
+  background-color: rgb(108, 0, 117);
+  transition: 150ms ease-in-out
+}
 </style>
